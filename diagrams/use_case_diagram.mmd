@@ -1,0 +1,60 @@
+%% PES University - Dept. of CSE Lab 1
+%% Problem Statement #15: Pharmacy Expiry & Re-order Dispatch Engine
+%% UML Use Case Diagram (Mermaid format)
+
+flowchart LR
+    %% Actors
+    subgraph Actors_Left ["Staff & Automation"]
+        Clerk(["👤 Pharmacy Clerk<br/><b>«Primary Actor»</b>"]):::actorStyle
+        Engine(["⚙️ Automated Inventory Engine<br/><b>«System / Timer Actor»</b>"]):::actorStyle
+    end
+
+    subgraph Actors_Right ["External Supply"]
+        Supplier(["🏢 Inventory Supplier<br/><b>«External Actor»</b>"]):::actorStyle
+    end
+
+    %% System Boundary
+    subgraph System ["Pharmacy Expiry & Re-order Dispatch Engine (System Boundary)"]
+        direction TB
+
+        %% Dispensing Subsystem
+        UC1(["<b>UC-01: Dispense Medicine</b><br/>(Sales Checkout)"]):::ucStyle
+        UC2(["<b>UC-02: Enforce FEFO</b><br/>Batch Allocation"]):::ucIncStyle
+        UC3(["<b>UC-03: Override FEFO</b><br/>Allocation"]):::ucExtStyle
+
+        %% Expiry Subsystem
+        UC4(["<b>UC-04: Track Batch Expiry</b><br/>&amp; Quarantine Expired"]):::ucStyle
+        UC5(["<b>UC-05: Generate Vendor</b><br/>Return Consignment"]):::ucExtStyle
+
+        %% Re-order Subsystem
+        UC6(["<b>UC-06: Monitor Safety</b><br/>Stock Threshold"]):::ucStyle
+        UC7(["<b>UC-07: Dispatch Automated</b><br/>Purchase Order (PO)"]):::ucIncStyle
+
+        %% Inwarding Subsystem
+        UC8(["<b>UC-08: Inward Received Stock</b><br/>&amp; Reconcile PO"]):::ucStyle
+        UC9(["<b>UC-09: Log Delivery</b><br/>Discrepancy"]):::ucExtStyle
+
+        %% Relationships within boundary
+        UC1 -. "«include»" .-> UC2
+        UC3 -. "«extend»<br/>[Clinical Override]" .-> UC1
+        UC5 -. "«extend»<br/>[Vendor Return Agreement]" .-> UC4
+        UC6 -. "«include»" .-> UC7
+        UC9 -. "«extend»<br/>[Delivery Discrepancy]" .-> UC8
+    end
+
+    %% Associations between Actors and Use Cases
+    Clerk --- UC1
+    Clerk --- UC4
+    Clerk --- UC8
+
+    Engine --- UC4
+    Engine --- UC6
+
+    UC7 --- Supplier
+    UC8 --- Supplier
+
+    %% Styling Classes
+    classDef actorStyle fill:#EEF2FF,stroke:#4338CA,stroke-width:2px,color:#1E1B4B,font-size:12px;
+    classDef ucStyle fill:#FFFFFF,stroke:#2563EB,stroke-width:2px,color:#0F172A,font-size:12px;
+    classDef ucIncStyle fill:#EFF6FF,stroke:#3B82F6,stroke-width:2px,color:#1D4ED8,font-size:11px;
+    classDef ucExtStyle fill:#FFFBEB,stroke:#D97706,stroke-width:2px,color:#92400E,font-size:11px;

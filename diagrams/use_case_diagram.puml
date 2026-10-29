@@ -1,0 +1,82 @@
+@startuml "Pharmacy_Expiry_Reorder_Engine_UML_Use_Case"
+' PES University - Dept. of CSE Lab 1: Requirements Engineering & UML Use-Case Modelling
+' Problem Statement #15: Pharmacy Expiry & Re-order Dispatch Engine
+
+title Pharmacy Expiry & Re-order Dispatch Engine - UML Use Case Diagram
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam roundcorner 8
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+' Skin customizations
+skinparam usecase {
+    BackgroundColor #F8FAFC
+    BorderColor #2563EB
+    BorderThickness 1.5
+    FontColor #0F172A
+    FontStyle bold
+}
+
+skinparam actor {
+    BackgroundColor #EEF2FF
+    BorderColor #4338CA
+    BorderThickness 1.8
+    FontColor #1E1B4B
+    FontStyle bold
+}
+
+skinparam arrow {
+    Color #334155
+    Thickness 1.2
+}
+
+' Actors
+actor "Pharmacy Clerk\n«Primary Actor»" as Clerk
+actor "Inventory Supplier\n«External Actor»" as Supplier
+actor "Automated Inventory Engine\n«System / Timer Actor»" as Engine
+
+rectangle "Pharmacy Expiry & Re-order Dispatch Engine" {
+    ' Core Use Cases
+    usecase "UC-01: Dispense Medicine\n(Sales Checkout)" as UC1
+    usecase "UC-02: Enforce FEFO\nBatch Allocation" as UC2
+    usecase "UC-03: Override FEFO\nAllocation" as UC3
+    usecase "UC-04: Track Batch Expiry\n& Quarantine Expired" as UC4
+    usecase "UC-05: Generate Vendor\nReturn Consignment" as UC5
+    usecase "UC-06: Monitor Safety\nStock Threshold" as UC6
+    usecase "UC-07: Dispatch Automated\nPurchase Order (PO)" as UC7
+    usecase "UC-08: Inward Received Stock\n& Reconcile PO" as UC8
+    usecase "UC-09: Log Delivery\nDiscrepancy" as UC9
+
+    ' Relationships
+    UC1 ..> UC2 : «include»
+    UC3 ..> UC1 : «extend»\n[Clinical Override]
+    UC5 ..> UC4 : «extend»\n[Vendor Agreement]
+    UC6 ..> UC7 : «include»
+    UC9 ..> UC8 : «extend»\n[Delivery Discrepancy]
+}
+
+' Actor Associations
+Clerk --- UC1
+Clerk --- UC4
+Clerk --- UC8
+
+Engine --- UC4
+Engine --- UC6
+
+Supplier --- UC7
+Supplier --- UC8
+
+note right of UC2
+  Enforces First-Expired-First-Out logic:
+  allocates closest valid expiry batch.
+end note
+
+note right of UC7
+  Dispatches EDI/API purchase order
+  when stock <= safety threshold.
+end note
+
+@enduml

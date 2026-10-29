@@ -1,0 +1,239 @@
+#!/usr/bin/env python3
+"""
+Generates a high-resolution, standards-compliant UML 2.5 Use Case Diagram SVG
+for PES University CSE Lab 1: Pharmacy Expiry & Re-order Dispatch Engine (Problem #15).
+"""
+
+def generate_svg():
+    svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1150 900" width="100%" height="100%" style="background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Drop Shadow Filter -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#000000" flood-opacity="0.10"/>
+    </filter>
+    <filter id="boundaryShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="3" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+
+    <!-- Arrow Markers -->
+    <!-- Open arrow for Include/Extend -->
+    <marker id="arrowOpen" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 1 2 L 10 6 L 1 10" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowExtend" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 1 2 L 10 6 L 1 10" fill="none" stroke="#d97706" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Title Banner -->
+  <rect x="30" y="20" width="1090" height="60" rx="8" fill="#1e293b"/>
+  <text x="575" y="45" font-size="18" font-weight="700" fill="#f8fafc" text-anchor="middle">PES UNIVERSITY • DEPT. OF COMPUTER SCIENCE &amp; ENGINEERING</text>
+  <text x="575" y="66" font-size="13" font-weight="500" fill="#94a3b8" text-anchor="middle">Lab 1: UML Use-Case Diagram | Problem Statement #15: Pharmacy Expiry &amp; Re-order Dispatch Engine</text>
+
+  <!-- System Boundary -->
+  <g filter="url(#boundaryShadow)">
+    <rect x="220" y="105" width="690" height="765" rx="14" fill="#f8fafc" stroke="#3b82f6" stroke-width="2.5"/>
+    <!-- System Boundary Header Banner -->
+    <rect x="220" y="105" width="690" height="38" rx="14" fill="#eff6ff" stroke="#3b82f6" stroke-width="2.5"/>
+    <rect x="220" y="125" width="690" height="18" fill="#eff6ff" />
+    <line x1="220" y1="143" x2="910" y2="143" stroke="#bfdbfe" stroke-width="1.5"/>
+    <text x="565" y="130" font-size="15" font-weight="700" fill="#1e40af" text-anchor="middle" letter-spacing="0.5">«System Boundary» Pharmacy Expiry &amp; Re-order Dispatch Engine</text>
+  </g>
+
+  <!-- ================= ACTORS ================= -->
+
+  <!-- Actor 1: Pharmacy Clerk (Left) -->
+  <g transform="translate(110, 360)">
+    <!-- Stick Figure -->
+    <circle cx="0" cy="0" r="18" fill="#e0e7ff" stroke="#4338ca" stroke-width="2.5"/>
+    <line x1="0" y1="18" x2="0" y2="60" stroke="#4338ca" stroke-width="2.5"/>
+    <line x1="-24" y1="34" x2="24" y2="34" stroke="#4338ca" stroke-width="2.5"/>
+    <line x1="0" y1="60" x2="-20" y2="105" stroke="#4338ca" stroke-width="2.5"/>
+    <line x1="0" y1="60" x2="20" y2="105" stroke="#4338ca" stroke-width="2.5"/>
+    <!-- Label -->
+    <rect x="-65" y="115" width="130" height="42" rx="6" fill="#1e1b4b"/>
+    <text x="0" y="132" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">«Primary Actor»</text>
+    <text x="0" y="148" font-size="13" font-weight="600" fill="#c7d2fe" text-anchor="middle">Pharmacy Clerk</text>
+  </g>
+
+  <!-- Actor 2: Inventory Supplier (Right) -->
+  <g transform="translate(1030, 480)">
+    <!-- Stick Figure -->
+    <circle cx="0" cy="0" r="18" fill="#fef3c7" stroke="#b45309" stroke-width="2.5"/>
+    <line x1="0" y1="18" x2="0" y2="60" stroke="#b45309" stroke-width="2.5"/>
+    <line x1="-24" y1="34" x2="24" y2="34" stroke="#b45309" stroke-width="2.5"/>
+    <line x1="0" y1="60" x2="-20" y2="105" stroke="#b45309" stroke-width="2.5"/>
+    <line x1="0" y1="60" x2="20" y2="105" stroke="#b45309" stroke-width="2.5"/>
+    <!-- Label -->
+    <rect x="-65" y="115" width="130" height="42" rx="6" fill="#451a03"/>
+    <text x="0" y="132" font-size="12" font-weight="700" fill="#fde68a" text-anchor="middle">«External Actor»</text>
+    <text x="0" y="148" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">Inventory Supplier</text>
+  </g>
+
+  <!-- Actor 3: Automated Inventory Scheduler / Engine (Bottom Left) -->
+  <g transform="translate(110, 680)">
+    <!-- Stick Figure / System Icon -->
+    <circle cx="0" cy="0" r="18" fill="#d1fae5" stroke="#047857" stroke-width="2.5"/>
+    <line x1="0" y1="18" x2="0" y2="60" stroke="#047857" stroke-width="2.5"/>
+    <line x1="-24" y1="34" x2="24" y2="34" stroke="#047857" stroke-width="2.5"/>
+    <line x1="0" y1="60" x2="-20" y2="105" stroke="#047857" stroke-width="2.5"/>
+    <line x1="0" y1="60" x2="20" y2="105" stroke="#047857" stroke-width="2.5"/>
+    <!-- Clock inside head to represent timer/scheduler -->
+    <circle cx="0" cy="0" r="10" fill="none" stroke="#047857" stroke-width="1.5"/>
+    <line x1="0" y1="0" x2="0" y2="-6" stroke="#047857" stroke-width="1.5"/>
+    <line x1="0" y1="0" x2="4" y2="0" stroke="#047857" stroke-width="1.5"/>
+    <!-- Label -->
+    <rect x="-70" y="115" width="140" height="42" rx="6" fill="#064e3b"/>
+    <text x="0" y="132" font-size="11" font-weight="700" fill="#a7f3d0" text-anchor="middle">«System / Timer Actor»</text>
+    <text x="0" y="148" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Inventory Engine</text>
+  </g>
+
+  <!-- ================= USE CASES ================= -->
+
+  <!-- UC 1: Dispense Medicine (Core Checkout) -->
+  <g filter="url(#dropShadow)" transform="translate(370, 220)">
+    <ellipse cx="0" cy="0" rx="105" ry="34" fill="#ffffff" stroke="#2563eb" stroke-width="2.2"/>
+    <text x="0" y="-6" font-size="13" font-weight="700" fill="#1e3a8a" text-anchor="middle">UC-01: Dispense Medicine</text>
+    <text x="0" y="12" font-size="11" font-weight="500" fill="#475569" text-anchor="middle">(Sales Checkout)</text>
+  </g>
+
+  <!-- UC 2: Enforce FEFO Batch Picking (Included by UC 1) -->
+  <g filter="url(#dropShadow)" transform="translate(720, 190)">
+    <ellipse cx="0" cy="0" rx="110" ry="32" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+    <text x="0" y="-5" font-size="12" font-weight="700" fill="#1d4ed8" text-anchor="middle">UC-02: Enforce FEFO</text>
+    <text x="0" y="11" font-size="11" font-weight="500" fill="#475569" text-anchor="middle">Batch Allocation</text>
+  </g>
+
+  <!-- UC 3: Override FEFO Allocation (Extends UC 1) -->
+  <g filter="url(#dropShadow)" transform="translate(720, 290)">
+    <ellipse cx="0" cy="0" rx="110" ry="32" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+    <text x="0" y="-5" font-size="12" font-weight="700" fill="#b45309" text-anchor="middle">UC-03: Override FEFO</text>
+    <text x="0" y="11" font-size="11" font-weight="500" fill="#78350f" text-anchor="middle">Allocation [Extension]</text>
+  </g>
+
+  <!-- UC 4: Track Expiry Dates & Quarantine (Engine / Clerk) -->
+  <g filter="url(#dropShadow)" transform="translate(370, 390)">
+    <ellipse cx="0" cy="0" rx="105" ry="34" fill="#ffffff" stroke="#2563eb" stroke-width="2.2"/>
+    <text x="0" y="-6" font-size="13" font-weight="700" fill="#1e3a8a" text-anchor="middle">UC-04: Track Batch Expiry</text>
+    <text x="0" y="12" font-size="11" font-weight="500" fill="#475569" text-anchor="middle">&amp; Quarantine Expired</text>
+  </g>
+
+  <!-- UC 5: Generate Near-Expiry Return List (Extends UC 4) -->
+  <g filter="url(#dropShadow)" transform="translate(720, 390)">
+    <ellipse cx="0" cy="0" rx="110" ry="32" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+    <text x="0" y="-5" font-size="12" font-weight="700" fill="#b45309" text-anchor="middle">UC-05: Generate Vendor</text>
+    <text x="0" y="11" font-size="11" font-weight="500" fill="#78350f" text-anchor="middle">Return Consignment</text>
+  </g>
+
+  <!-- UC 6: Monitor Safety Threshold (Engine / Checkout) -->
+  <g filter="url(#dropShadow)" transform="translate(370, 540)">
+    <ellipse cx="0" cy="0" rx="105" ry="34" fill="#ffffff" stroke="#2563eb" stroke-width="2.2"/>
+    <text x="0" y="-6" font-size="13" font-weight="700" fill="#1e3a8a" text-anchor="middle">UC-06: Monitor Safety</text>
+    <text x="0" y="12" font-size="11" font-weight="500" fill="#475569" text-anchor="middle">Stock Threshold</text>
+  </g>
+
+  <!-- UC 7: Generate & Dispatch Purchase Order (Includes UC 6 trigger) -->
+  <g filter="url(#dropShadow)" transform="translate(720, 540)">
+    <ellipse cx="0" cy="0" rx="110" ry="34" fill="#eff6ff" stroke="#3b82f6" stroke-width="2.2"/>
+    <text x="0" y="-6" font-size="13" font-weight="700" fill="#1d4ed8" text-anchor="middle">UC-07: Dispatch Automated</text>
+    <text x="0" y="12" font-size="11" font-weight="500" fill="#475569" text-anchor="middle">Purchase Order (PO)</text>
+  </g>
+
+  <!-- UC 8: Inward Stock & Reconcile Delivery (Clerk & Supplier) -->
+  <g filter="url(#dropShadow)" transform="translate(370, 710)">
+    <ellipse cx="0" cy="0" rx="105" ry="34" fill="#ffffff" stroke="#2563eb" stroke-width="2.2"/>
+    <text x="0" y="-6" font-size="13" font-weight="700" fill="#1e3a8a" text-anchor="middle">UC-08: Inward Received Stock</text>
+    <text x="0" y="12" font-size="11" font-weight="500" fill="#475569" text-anchor="middle">&amp; Reconcile PO</text>
+  </g>
+
+  <!-- UC 9: Record Delivery Discrepancy (Extends UC 8) -->
+  <g filter="url(#dropShadow)" transform="translate(720, 710)">
+    <ellipse cx="0" cy="0" rx="110" ry="32" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+    <text x="0" y="-5" font-size="12" font-weight="700" fill="#b45309" text-anchor="middle">UC-09: Log Delivery</text>
+    <text x="0" y="11" font-size="11" font-weight="500" fill="#78350f" text-anchor="middle">Discrepancy [Extension]</text>
+  </g>
+
+
+  <!-- ================= ASSOCIATIONS (Solid Lines) ================= -->
+
+  <!-- Pharmacy Clerk Associations -->
+  <!-- Clerk -> UC-01 Dispense Medicine -->
+  <line x1="165" y1="390" x2="265" y2="235" stroke="#1e293b" stroke-width="1.8"/>
+  <!-- Clerk -> UC-04 Track Expiry -->
+  <line x1="170" y1="410" x2="265" y2="390" stroke="#1e293b" stroke-width="1.8"/>
+  <!-- Clerk -> UC-08 Inward Stock -->
+  <line x1="160" y1="440" x2="285" y2="685" stroke="#1e293b" stroke-width="1.8"/>
+
+  <!-- Automated Inventory Engine Associations -->
+  <!-- Engine -> UC-04 Track Expiry -->
+  <line x1="165" y1="710" x2="310" y2="420" stroke="#047857" stroke-width="1.8" stroke-dasharray="4,2"/>
+  <!-- Engine -> UC-06 Monitor Safety Stock Threshold -->
+  <line x1="175" y1="730" x2="275" y2="560" stroke="#047857" stroke-width="1.8"/>
+
+  <!-- Inventory Supplier Associations -->
+  <!-- Supplier -> UC-07 Dispatch Automated PO -->
+  <line x1="970" y1="535" x2="830" y2="540" stroke="#b45309" stroke-width="1.8"/>
+  <!-- Supplier -> UC-08 Inward Received Stock -->
+  <line x1="975" y1="565" x2="475" y2="720" stroke="#b45309" stroke-width="1.8"/>
+
+
+  <!-- ================= RELATIONSHIPS («include» & «extend») ================= -->
+
+  <!-- UC-01 -> UC-02 «include» (Dispense includes FEFO Allocation) -->
+  <path d="M 475 210 L 610 200" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowOpen)"/>
+  <rect x="508" y="185" width="76" height="20" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="546" y="199" font-size="11" font-weight="700" fill="#1d4ed8" text-anchor="middle">«include»</text>
+
+  <!-- UC-03 -> UC-01 «extend» (Override FEFO extends Dispense Medicine) -->
+  <path d="M 610 280 L 465 240" fill="none" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+  <rect x="508" y="247" width="76" height="20" rx="4" fill="#ffffff" stroke="#fcd34d" stroke-width="1"/>
+  <text x="546" y="261" font-size="11" font-weight="700" fill="#b45309" text-anchor="middle">«extend»</text>
+  <!-- Extension Point Note -->
+  <text x="546" y="278" font-size="9" font-style="italic" fill="#92400e" text-anchor="middle">[Clinical Override]</text>
+
+  <!-- UC-05 -> UC-04 «extend» (Return Consignment extends Expiry Tracking) -->
+  <path d="M 610 390 L 475 390" fill="none" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+  <rect x="508" y="380" width="76" height="20" rx="4" fill="#ffffff" stroke="#fcd34d" stroke-width="1"/>
+  <text x="546" y="394" font-size="11" font-weight="700" fill="#b45309" text-anchor="middle">«extend»</text>
+  <!-- Extension Point Note -->
+  <text x="546" y="411" font-size="9" font-style="italic" fill="#92400e" text-anchor="middle">[Vendor Agreement]</text>
+
+  <!-- UC-06 -> UC-07 «include» (Threshold Breach includes Dispatch Automated PO) -->
+  <path d="M 475 540 L 610 540" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowOpen)"/>
+  <rect x="508" y="530" width="76" height="20" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="546" y="544" font-size="11" font-weight="700" fill="#1d4ed8" text-anchor="middle">«include»</text>
+
+  <!-- UC-09 -> UC-08 «extend» (Discrepancy extends Inward Stock) -->
+  <path d="M 610 710 L 475 710" fill="none" stroke="#d97706" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrowExtend)"/>
+  <rect x="508" y="700" width="76" height="20" rx="4" fill="#ffffff" stroke="#fcd34d" stroke-width="1"/>
+  <text x="546" y="714" font-size="11" font-weight="700" fill="#b45309" text-anchor="middle">«extend»</text>
+  <!-- Extension Point Note -->
+  <text x="546" y="731" font-size="9" font-style="italic" fill="#92400e" text-anchor="middle">[Delivery Discrepancy]</text>
+
+
+  <!-- ================= LEGEND ================= -->
+  <g transform="translate(250, 790)">
+    <rect x="0" y="0" width="630" height="65" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="15" y="20" font-size="12" font-weight="700" fill="#334155">Diagram Legend:</text>
+    
+    <!-- Association -->
+    <line x1="15" y1="42" x2="60" y2="42" stroke="#1e293b" stroke-width="1.8"/>
+    <text x="70" y="46" font-size="11" fill="#475569">Association</text>
+
+    <!-- Include -->
+    <line x1="170" y1="42" x2="225" y2="42" stroke="#2563eb" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrowOpen)"/>
+    <text x="235" y="46" font-size="11" font-weight="600" fill="#1d4ed8">«include» (Mandatory sub-task)</text>
+
+    <!-- Extend -->
+    <line x1="420" y1="42" x2="475" y2="42" stroke="#d97706" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrowExtend)"/>
+    <text x="485" y="46" font-size="11" font-weight="600" fill="#b45309">«extend» (Optional / Conditional)</text>
+  </g>
+
+</svg>
+"""
+    with open("/Users/mrudul1206/.gemini/antigravity/scratch/pharmacy-expiry-reorder-engine/diagrams/use_case_diagram.svg", "w") as f:
+        f.write(svg.strip())
+    print("SVG generated successfully!")
+
+if __name__ == "__main__":
+    generate_svg()
